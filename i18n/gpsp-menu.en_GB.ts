@@ -4,9 +4,9 @@
 <context>
     <name></name>
     <message id="id-app-launcher-name">
-        <location filename="asteroid-stopwatch.desktop.h" line="6"/>
-        <source>Stopwatch</source>
-        <translation>Stopwatch</translation>
+        <location filename="gpsp-menu.desktop.h" line="6"/>
+        <source>gpSP</source>
+        <translation>gpSP</translation>
     </message>
 </context>
 </TS>
