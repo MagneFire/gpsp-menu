@@ -1,23 +1,32 @@
-/*
- * Copyright (C) 2017 - Florent Revest <revestflo@gmail.com>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
-
+#include <QGuiApplication>
+#include <QScreen>
 #include <asteroidapp.h>
+#include <QQmlEngine>
+#include <QQuickView>
+#include <QQmlContext>
+#include <QAbstractListModel>
+#include <QDir>
+
+#include "FileItem.h"
+#include "FileModel.h"
 
 int main(int argc, char *argv[])
 {
-    return AsteroidApp::main(argc, argv);
+    FileModel model;
+
+    QDir directory("/home/ceres/roms");
+    QStringList roms = directory.entryList(QStringList() << "*.gba" << "*.GBA",QDir::Files);
+    foreach(QString rom, roms) {
+        QFileInfo fileInfo(rom);
+        model.addFile(FileItem(fileInfo.fileName(), rom));
+    }   
+   
+    QScopedPointer<QGuiApplication> app(AsteroidApp::application(argc, argv));
+    QScopedPointer<QQuickView> view(AsteroidApp::createView());
+
+    view->rootContext()->setContextProperty("myModel", &model);
+    view->setSource(QUrl("qrc:/main.qml"));
+    view->resize(app->primaryScreen()->size());
+    view->show();
+    return app->exec();
 }

@@ -1,7 +1,11 @@
 TARGET = gpsp-menu
 CONFIG += asteroidapp
 
-SOURCES +=     main.cpp
+HEADERS +=     FileItem.h \
+               FileModel.h
+SOURCES +=     main.cpp \
+               FileItem.cpp \
+               FileModel.cpp
 RESOURCES +=   resources.qrc
 OTHER_FILES += main.qml
 
