@@ -15,10 +15,9 @@ int main(int argc, char *argv[])
     FileModel model;
 
     QDir directory("/home/ceres/roms");
-    QStringList roms = directory.entryList(QStringList() << "*.gba" << "*.GBA",QDir::Files);
-    foreach(QString rom, roms) {
-        QFileInfo fileInfo(rom);
-        model.addFile(FileItem(fileInfo.fileName(), rom));
+    QFileInfoList roms = directory.entryInfoList(QStringList() << "*.gba" << "*.GBA",QDir::Files);
+    foreach(QFileInfo rom, roms) {
+        model.addFile(FileItem(rom.fileName(), rom.absoluteFilePath()));
     }   
    
     QScopedPointer<QGuiApplication> app(AsteroidApp::application(argc, argv));

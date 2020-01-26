@@ -7,7 +7,6 @@
 class FileModel : public QAbstractListModel
 {
     Q_OBJECT
-    //Q_PROPERTY(QList<Animal> animals READ getListData NOTIFY animalModelChanged)
 
 public:
     enum AnimalRoles {
