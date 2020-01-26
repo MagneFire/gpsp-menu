@@ -9,12 +9,39 @@
 
 #include "FileItem.h"
 #include "FileModel.h"
+#include "Settings.h"
+
+void setupPaths() {
+    if (!QFile::exists(QDir::homePath() + "/.gpsp/gpsp.conf")) {
+        qDebug() << "Config file not found, setting up gpsp-menu.";
+        QDir().mkdir(QDir::homePath() + "/.gpsp");
+        QDir().mkdir(QDir::homePath() + "/roms");
+
+        QSettings settings(QDir::homePath() + "/.gpsp/gpsp.conf", QSettings::IniFormat);
+        settings.setValue("GAME_PATH", "");
+        settings.setValue("GBA_BIOS", QDir::homePath() + "/.gpsp/gba_bios.bin");
+        settings.setValue("KEY_MAP", "1, 2, 3, 4, 5, 6");
+        settings.setValue("ROM_PATH", QDir::homePath() + "/roms");
+        settings.sync();
+        if(settings.status() == QSettings::NoError) {
+            qDebug() << "Config file was properly setup.";
+        } else {
+            qDebug() << "Error while creating config file " << settings.status();
+        }
+    }
+}
 
 int main(int argc, char *argv[])
 {
     FileModel model;
 
-    QDir directory("/home/ceres/roms");
+    setupPaths();
+
+    Settings * settings = Settings::getInstance();
+    QString romPath = settings->getRomPath();
+    qDebug() << romPath;
+
+    QDir directory(romPath);
     QFileInfoList roms = directory.entryInfoList(QStringList() << "*.gba" << "*.GBA",QDir::Files);
     foreach(QFileInfo rom, roms) {
         model.addFile(FileItem(rom.fileName(), rom.absoluteFilePath()));

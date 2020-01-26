@@ -1,6 +1,7 @@
 #include "FileModel.h"
 #include <QDebug>
 #include <QProcess>
+#include "Settings.h"
 QProcess process;
 
 FileModel::FileModel(QObject *parent)
@@ -41,6 +42,7 @@ QHash<int, QByteArray> FileModel::roleNames() const {
 }
 
 void FileModel::run(const QString path) {
-    qDebug() << "Path " << path;
+    Settings * settings = Settings::getInstance();
+    settings->setRom(path);
     process.start("systemctl", QStringList() << "--user" << "start" << "gpsp");
 }
