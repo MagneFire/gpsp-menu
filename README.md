@@ -1,19 +1,5 @@
-# Asteroid Stopwatch
-A stopwatch app for [AsteroidOS](http://asteroidos.org/)
+# gpSP Menu
+A frontend for the [gpSP](https://github.com/MagneFire/gpsp) port for AsteroidOS.
 
 ## Dependencies
 * [qml-asteroid](https://github.com/AsteroidOS/qml-asteroid)
-
-## Copyright and License
-(C) Copyright 2015 by Tim Süberkrüb
-
-Part of this code is based on "Stopwatch" (https://github.com/baleboy/stopwatch)
-
-Copyright (C) 2011 Francesco Balestrieri
-
-This application is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-See LICENSE for more information.
