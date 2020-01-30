@@ -14,8 +14,9 @@
 void setupPaths() {
     if (!QFile::exists(QDir::homePath() + "/.gpsp/gpsp.conf")) {
         qDebug() << "Config file not found, setting up gpsp-menu.";
-        QDir().mkdir(QDir::homePath() + "/.gpsp");
-        QDir().mkdir(QDir::homePath() + "/roms");
+        qDebug() << "Config path " << QDir::homePath() + "/.gpsp";
+        QDir().mkpath(QDir::homePath() + "/.gpsp");
+        QDir().mkpath(QDir::homePath() + "/roms");
 
         QSettings settings(QDir::homePath() + "/.gpsp/gpsp.conf", QSettings::IniFormat);
         settings.setValue("GAME_PATH", "");

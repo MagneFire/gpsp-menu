@@ -11,7 +11,8 @@ class FileModel : public QAbstractListModel
 public:
     enum AnimalRoles {
     TitleRole = Qt::UserRole + 1,
-    PathRole
+    PathRole,
+    IdRole
     };
 
     FileModel(QObject *parent = 0);
