@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
     qDebug() << romPath;
 
     QDir directory(romPath);
-    QFileInfoList roms = directory.entryInfoList(QStringList() << "*.gba" << "*.GBA",QDir::Files);
+    QFileInfoList roms = directory.entryInfoList(QStringList() << "*.gba" << "*.GBA" << "*.gbc" << "*.GBC" << "*.gb" << "*.GB",QDir::Files);
     foreach(QFileInfo rom, roms) {
         model.addFile(FileItem(rom.fileName(), rom.absoluteFilePath()));
     }   

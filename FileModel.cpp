@@ -1,6 +1,7 @@
 #include "FileModel.h"
 #include <QDebug>
 #include <QProcess>
+#include <QFileInfo>
 #include "Settings.h"
 QProcess process;
 
@@ -47,5 +48,11 @@ QHash<int, QByteArray> FileModel::roleNames() const {
 void FileModel::run(const QString path) {
     Settings * settings = Settings::getInstance();
     settings->setRom(path);
-    process.start("systemctl", QStringList() << "--user" << "start" << "gpsp");
+    QFileInfo file(path);
+    QString rom_ext = file.suffix().toLower();
+    if (rom_ext.contains("gba")) {
+        process.start("systemctl", QStringList() << "--user" << "start" << "gpsp");
+    } else {
+        process.start("systemctl", QStringList() << "--user" << "start" << "gearboy");
+    }
 }
