@@ -24,7 +24,7 @@ Application {
                     anchors.right: parent.right
                     anchors.left: parent.left
                     width: parent.width
-                    height: DeviceInfo.hasRoundScreen ? Dims.h(10) : 0
+                    height: DeviceInfo.hasRoundScreen ? app.height/12 : 0
                 }
             }
             ListView {
@@ -37,8 +37,8 @@ Application {
 
                 model: myModel
                 delegate: Item {
-                    // The item height is 1/5 of the screen height, resulting in 5 items on screen.
-                    height: app.height/5
+                    // The item height is 1/6 of the screen height, resulting in 5 items on screen.
+                    height: app.height/6
                     width: parent.width
 
                     Rectangle {
