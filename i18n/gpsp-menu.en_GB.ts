@@ -5,8 +5,8 @@
     <name></name>
     <message id="id-app-launcher-name">
         <location filename="gpsp-menu.desktop.h" line="6"/>
-        <source>gpSP</source>
-        <translation>gpSP</translation>
+        <source>Gameboy</source>
+        <translation>Gameboy</translation>
     </message>
 </context>
 </TS>

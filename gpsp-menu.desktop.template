@@ -2,6 +2,6 @@
 Type=Application
 Categories=Applications;
 Exec=invoker --single-instance --type=qtcomponents-qt5 /usr/bin/gpsp-menu
-Icon=ios-game-controller-a-outline
+Icon=gameboy
 X-Asteroid-Center-Color=#dfb103
 X-Asteroid-Outer-Color=#be4e0e
