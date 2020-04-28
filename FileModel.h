@@ -9,7 +9,7 @@ class FileModel : public QAbstractListModel
     Q_OBJECT
 
 public:
-    enum AnimalRoles {
+    enum FileRoles {
     TitleRole = Qt::UserRole + 1,
     PathRole,
     IdRole
@@ -23,8 +23,6 @@ public:
     int rowCount(const QModelIndex & parent = QModelIndex()) const;
 
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
-
-    Q_INVOKABLE void run(const QString size);
 signals:
     void fileModelChanged();
 

@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import org.asteroid.controls 1.0
 import org.asteroid.utils 1.0
+import RomManager 1.0
 
 Application {
     id: app
@@ -27,6 +28,16 @@ Application {
                     height: DeviceInfo.hasRoundScreen ? app.height/12 : 0
                 }
             }
+            Label {
+                //% "No ROMs found please add them to the %1 folder"
+                text: qsTrId("id-no-roms").arg(RomManager.root)
+                wrapMode: Text.WordWrap
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                width: parent.width
+                horizontalAlignment: Text.AlignHCenter
+                visible: romBrowser.count == 0
+            }
             ListView {
                 id: romBrowser
                 anchors.fill: parent
@@ -35,7 +46,7 @@ Application {
                 header: paddingTopBottom
                 footer: paddingTopBottom
 
-                model: myModel
+                model: RomManager.getModel()
                 delegate: Item {
                     // The item height is 1/6 of the screen height, resulting in 5 items on screen.
                     height: app.height/6
@@ -79,7 +90,7 @@ Application {
                         width: parent.width
                         height: parent.height
                         anchors.centerIn: parent
-                        onClicked: myModel.run(path);
+                        onClicked: RomManager.run(path);
                     }
                 }
             }

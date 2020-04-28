@@ -8,5 +8,10 @@
         <source>Gameboy</source>
         <translation>Gameboy</translation>
     </message>
+    <message id="id-no-roms">
+        <location filename="../main.qml" line="33"/>
+        <source>No ROMs found please add them to the %1 folder</source>
+        <translation>No ROMs found please add them to the %1 folder</translation>
+    </message>
 </context>
 </TS>

@@ -4,12 +4,10 @@
 #include <QQmlEngine>
 #include <QQuickView>
 #include <QQmlContext>
-#include <QAbstractListModel>
 #include <QDir>
 
-#include "FileItem.h"
-#include "FileModel.h"
 #include "Settings.h"
+#include "RomManager.h"
 
 void setupPaths() {
     if (!QFile::exists(QDir::homePath() + "/.gpsp/gpsp.conf")) {
@@ -34,7 +32,7 @@ void setupPaths() {
 
 int main(int argc, char *argv[])
 {
-    FileModel model;
+    RomManager* romManager = RomManager::getInstance();
 
     setupPaths();
 
@@ -42,16 +40,13 @@ int main(int argc, char *argv[])
     QString romPath = settings->getRomPath();
     qDebug() << romPath;
 
-    QDir directory(romPath);
-    QFileInfoList roms = directory.entryInfoList(QStringList() << "*.gba" << "*.GBA" << "*.gbc" << "*.GBC" << "*.gb" << "*.GB",QDir::Files);
-    foreach(QFileInfo rom, roms) {
-        model.addFile(FileItem(rom.fileName(), rom.absoluteFilePath()));
-    }   
+    romManager->setRoot(romPath);
+    romManager->refresh();
    
     QScopedPointer<QGuiApplication> app(AsteroidApp::application(argc, argv));
     QScopedPointer<QQuickView> view(AsteroidApp::createView());
 
-    view->rootContext()->setContextProperty("myModel", &model);
+    qmlRegisterSingletonType<RomManager>("RomManager", 1, 0, "RomManager", &RomManager::qmlInstance);
     view->setSource(QUrl("qrc:/main.qml"));
     view->resize(app->primaryScreen()->size());
     view->show();
