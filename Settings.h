@@ -11,10 +11,14 @@ public:
 
     QString getRomPath() const;
     void setRom(QString path);
+
+    void setActiveGameController(int joyId);
+    void setGameControllerMapping(int joyId, QString mapping);
 private:
     Settings();
     virtual ~Settings() {};
 
+    void saveSettings();
     static Settings* instance;
     QSettings * settings;
 };

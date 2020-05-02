@@ -7,6 +7,7 @@
 #include <QDir>
 
 #include "Settings.h"
+#include "SdlGameController.h"
 #include "RomManager.h"
 
 void setupPaths() {
@@ -46,6 +47,7 @@ int main(int argc, char *argv[])
     QScopedPointer<QGuiApplication> app(AsteroidApp::application(argc, argv));
     QScopedPointer<QQuickView> view(AsteroidApp::createView());
 
+    qmlRegisterSingletonType<SdlGameController>("SdlGameController", 1, 0, "SdlGameController", &SdlGameController::qmlInstance);
     qmlRegisterSingletonType<RomManager>("RomManager", 1, 0, "RomManager", &RomManager::qmlInstance);
     view->setSource(QUrl("qrc:/main.qml"));
     view->resize(app->primaryScreen()->size());

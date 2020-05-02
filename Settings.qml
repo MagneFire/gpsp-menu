@@ -4,23 +4,11 @@ import org.asteroid.utils 1.0
 import RomManager 1.0
 import SdlGameController 1.0
 
-Application {
-    id: app
+Item {
 
-    centerColor: "#dfb103"
-    outerColor: "#be4e0e"
-    property color overlayColor: "#b07414"
-
-    Component { id: controllerTestLayer;        ControllerTest       { } }
-    Component { id: controllerMapLayer;         ControllerMapper       { } }
-    Component { id: controllerSelectorLayer;    ControllerSelector       { } }
-    Component { id: settingsLayer;
-        Settings {
-            onControllerTestClicked: layerStack.push(controllerTestLayer)
-            onControllerMapClicked: layerStack.push(controllerMapLayer)
-            onControllerSelectorClicked: layerStack.push(controllerSelectorLayer)
-        }
-    }
+    signal controllerTestClicked
+    signal controllerMapClicked
+    signal controllerSelectorClicked
 
     LayerStack {
         id: layerStack
@@ -29,7 +17,6 @@ Application {
 
     Component {
         id: firstPageComponent
-
         Item {
             Component {
                 id: lvHeader
@@ -49,16 +36,6 @@ Application {
                     height: (DeviceInfo.hasRoundScreen ? app.height/12 : 0) + (app.height/6)
                 }
             }
-            Label {
-                //% "No ROMs found please add them to the %1 folder"
-                text: qsTrId("id-no-roms").arg(RomManager.root)
-                wrapMode: Text.WordWrap
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
-                width: parent.width
-                horizontalAlignment: Text.AlignHCenter
-                visible: romBrowser.count == 0
-            }
             ListView {
                 id: romBrowser
                 anchors.fill: parent
@@ -67,7 +44,7 @@ Application {
                 header: lvHeader
                 footer: lvFooter
 
-                model: RomManager.getModel()
+                model: entries
                 delegate: Item {
                     // The item height is 1/6 of the screen height, resulting in 5 items on screen.
                     height: app.height/6
@@ -111,18 +88,32 @@ Application {
                         width: parent.width
                         height: parent.height
                         anchors.centerIn: parent
-                        onClicked: RomManager.run(path);
+                        onClicked: {
+                            emitSignal()
+                        }
                     }
                 }
             }
 
-            IconButton {
-                id: add
-                enabled: opacity == 1.0
-                opacity: romBrowser.height - romBrowser.contentY <= 1 ? 1.0 : 0.0
-                Behavior on opacity { NumberAnimation { duration: 200 } }
-                iconName:  "ios-settings-outline"
-                onClicked: layerStack.push(settingsLayer)
+
+            ListModel {
+                id: entries
+
+                ListElement {
+                    //% "Test controller mapping"
+                    title: qsTrId("id-settings-map-test")
+                    property var emitSignal: function(){ controllerTestClicked(); }
+                }
+                ListElement {
+                    //% "Map a controller"
+                    title: qsTrId("id-settings-map")
+                    property var emitSignal: function(){ controllerMapClicked(); }
+                }
+                ListElement {
+                    //% "Select a controller"
+                    title: qsTrId("id-settings-select")
+                    property var emitSignal: function(){ controllerSelectorClicked(); }
+                }
             }
         }
     }

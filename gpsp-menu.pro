@@ -1,15 +1,19 @@
 TARGET = gpsp-menu
-CONFIG += asteroidapp
+CONFIG += link_pkgconfig asteroidapp
+
+PKGCONFIG += sdl2
 
 HEADERS +=     FileItem.h \
                FileModel.h \
                Settings.h \
-               RomManager.h
+               RomManager.h \
+               SdlGameController.h
 SOURCES +=     main.cpp \
                FileItem.cpp \
                FileModel.cpp \
                Settings.cpp \
-               RomManager.cpp
+               RomManager.cpp \
+               SdlGameController.cpp
 RESOURCES +=   resources.qrc
 OTHER_FILES += main.qml
 
