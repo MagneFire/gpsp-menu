@@ -134,7 +134,7 @@ void SdlGameController::onEventTrigger() {
 
 }
 
-QString SdlGameController::getCurrentKeyToMap() {
+QString SdlGameController::getCurrentKeyToMapString() {
 
     switch(currentButtonToMap) {
       case GC_BUTTON_A:
@@ -176,7 +176,13 @@ QString SdlGameController::getCurrentKeyToMap() {
   return QVariant::fromValue(currentButtonToMap).toString();
 }
 
+int SdlGameController::getCurrentKeyToMap() {
+  return currentButtonToMap;
+}
+
 void SdlGameController::setKeyToMap(QString value, int skip) {
+  if (currentButtonToMap == GC_BUTTON_MAX) return;
+
   QString* alreadyMapped = std::find(std::begin(buttonMap), std::end(buttonMap), value);
   if ((alreadyMapped == std::end(buttonMap)) || skip) {
     buttonMap[currentButtonToMap] = value;
@@ -222,7 +228,7 @@ void SdlGameController::setKeyToMap(QString value, int skip) {
   }
 
   if (currentButtonToMap == GC_BUTTON_MAX) {
-    formatMapping();
+    writeMapping();
   }
 }
 
@@ -263,7 +269,7 @@ void SdlGameController::setActiveJoyId(int id) {
   settings->setActiveGameController(activeJoyId);
   emit activeJoyIdChanged();
 }
-void SdlGameController::formatMapping() {
+void SdlGameController::writeMapping() {
   QString map;
   SDL_JoystickGUID guid;
   char* guidStr = new char[64];
@@ -310,11 +316,9 @@ void SdlGameController::formatMapping() {
           map.append(",dpright:");
           break;
     }
-    //map.append("b");
-    //map.append(QString::number(buttonMap[i]));
     map.append(buttonMap[i]);
   }
   printf("%s\r\n", map.toStdString().c_str());
   settings->setGameControllerMapping(joyId, map.toStdString().c_str());
-  settings->setActiveGameController(joyId);
+  setActiveJoyId(joyId);
 }

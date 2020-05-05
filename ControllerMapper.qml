@@ -4,6 +4,8 @@ import org.asteroid.utils 1.0
 import SdlGameController 1.0
 
 Item {
+    signal close
+
     Component.onCompleted: SdlGameController.enable()
     Component.onDestruction: SdlGameController.disable()
 
@@ -14,8 +16,12 @@ Item {
             if (SdlGameController.joyId == -1) {
                 SdlGameController.joyId = joyId
                 SdlGameController.disableBut(SdlGameController.joyId)
-            } else if (Math.abs(value) > 3200) {
-                SdlGameController.setAxisToMap(axis, value > 0)
+            } else if (Math.abs(value) > 32000) {
+                if (SdlGameController.map == SdlGameController.GC_BUTTON_MAX) {
+                    close()
+                } else {
+                    SdlGameController.setAxisToMap(axis, value > 0)
+                }
             }
         }
         onJoyButtonEvent: {
@@ -24,7 +30,11 @@ Item {
                 SdlGameController.joyId = joyId
                 SdlGameController.disableBut(SdlGameController.joyId)
             } else if (pressed) {
-                SdlGameController.setButtonToMap(button)
+                if (SdlGameController.map == SdlGameController.GC_BUTTON_MAX) {
+                    close()
+                } else {
+                    SdlGameController.setButtonToMap(button)
+                }
             }
         }
     }
@@ -41,19 +51,36 @@ Item {
     }
     Label {
         //% "Press %1 button, tap to ignore"
-        text: qsTrId("id-button-map").arg(SdlGameController.map)
+        text: qsTrId("id-button-map").arg(SdlGameController.mapStr)
         wrapMode: Text.WordWrap
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         width: parent.width
         horizontalAlignment: Text.AlignHCenter
-        visible: SdlGameController.joyId != -1
+        visible: (SdlGameController.joyId != -1) && (SdlGameController.map != SdlGameController.GC_BUTTON_MAX)
+    }
+    Label {
+        //% "Controller mapped, press a button or tap to exit."
+        text: qsTrId("id-controller-mapped")
+        wrapMode: Text.WordWrap
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        width: parent.width
+        horizontalAlignment: Text.AlignHCenter
+        visible: SdlGameController.map == SdlGameController.GC_BUTTON_MAX
     }
 
     MouseArea {
         width: parent.width
         height: parent.height
         anchors.centerIn: parent
-        onClicked: SdlGameController.setButtonToMap(-1)
+        onClicked: {
+            console.log(SdlGameController.map + " " + SdlGameController.GC_BUTTON_MAX)
+            if (SdlGameController.map == SdlGameController.GC_BUTTON_MAX) {
+                close()
+            } else {
+                SdlGameController.setButtonToMap(-1)
+            }
+        }
     }
 }

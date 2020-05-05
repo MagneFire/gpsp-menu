@@ -9,12 +9,26 @@ Application {
 
     centerColor: "#dfb103"
     outerColor: "#be4e0e"
-    property color overlayColor: "#b07414"
 
+    Component.onCompleted: SdlGameController.enable()
+    Component.onDestruction: SdlGameController.disable()
+    Connections {
+        target: SdlGameController
+        onAxisEvent: SdlGameController.activeJoyId = joyId
+        onButtonEvent: SdlGameController.activeJoyId = joyId
+    }
+
+    Component { id: selectBeforeRunLayer;       SelectBeforeRun       { } }
     Component { id: controllerTestLayer;        ControllerTest       { } }
-    Component { id: controllerMapLayer;         ControllerMapper       { } }
+    Component {
+        id: controllerMapLayer
+        ControllerMapper {
+            onClose: layerStack.popAnim()
+        }
+    }
     Component { id: controllerSelectorLayer;    ControllerSelector       { } }
-    Component { id: settingsLayer;
+    Component {
+        id: settingsLayer
         Settings {
             onControllerTestClicked: layerStack.push(controllerTestLayer)
             onControllerMapClicked: layerStack.push(controllerMapLayer)
@@ -111,15 +125,22 @@ Application {
                         width: parent.width
                         height: parent.height
                         anchors.centerIn: parent
-                        onClicked: RomManager.run(path);
+                        onClicked: {
+                            if (SdlGameController.activeJoyId == -1) {
+                                layerStack.push(selectBeforeRunLayer, {"path": path})
+                            } else {
+                                RomManager.run(path);
+                            }
+                        }
                     }
                 }
             }
 
             IconButton {
                 id: add
+                visible: romBrowser.height - romBrowser.contentY <= 1
                 enabled: opacity == 1.0
-                opacity: romBrowser.height - romBrowser.contentY <= 1 ? 1.0 : 0.0
+                opacity: visible ? 1.0 : 0.0
                 Behavior on opacity { NumberAnimation { duration: 200 } }
                 iconName:  "ios-settings-outline"
                 onClicked: layerStack.push(settingsLayer)

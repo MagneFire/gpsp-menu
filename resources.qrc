@@ -5,5 +5,6 @@
         <file>ControllerTest.qml</file>
         <file>ControllerMapper.qml</file>
         <file>ControllerSelector.qml</file>
+        <file>SelectBeforeRun.qml</file>
     </qresource>
 </RCC>

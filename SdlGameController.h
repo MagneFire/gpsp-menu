@@ -17,7 +17,9 @@ class SdlGameController : public QObject
     Q_DISABLE_COPY(SdlGameController)
     Q_PROPERTY(int count READ getCount NOTIFY countChanged)
 
-    Q_PROPERTY(QString map READ getCurrentKeyToMap NOTIFY currentKeyToMapChanged)
+
+    Q_PROPERTY(QString mapStr READ getCurrentKeyToMapString NOTIFY currentKeyToMapChanged)
+    Q_PROPERTY(int map READ getCurrentKeyToMap NOTIFY currentKeyToMapChanged)
     Q_PROPERTY(int joyId READ getJoyId WRITE setJoyId NOTIFY joyIdChanged)
     Q_PROPERTY(int activeJoyId READ getActiveJoyId WRITE setActiveJoyId NOTIFY activeJoyIdChanged)
 public:
@@ -52,18 +54,16 @@ public:
     Q_INVOKABLE void disableBut(int joyId);
 
     int getCount();
-    QString getCurrentKeyToMap();
+    QString getCurrentKeyToMapString();
+    int getCurrentKeyToMap();
     Q_INVOKABLE void setButtonToMap(int key);
     Q_INVOKABLE void setAxisToMap(int axis, int direction);
 
     int getJoyId();
     void setJoyId(int id);
 
-
     int getActiveJoyId();
     void setActiveJoyId(int id);
-
-    void formatMapping();
 signals:
     void event(SDL_Event event);
 
@@ -95,6 +95,7 @@ private:
     void enableTimer();
     void disableTimer();
     void setKeyToMap(QString value, int skip = 0);
+    void writeMapping();
 };
 
 #endif
