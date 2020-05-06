@@ -41,8 +41,6 @@ void Settings::setRom(QString path) {
 void Settings::setActiveGameController(int joyId) {
     settings->setValue("JOYSTICK_ACTIVE", joyId);
     qDebug() << settings->value("JOYSTICK_ACTIVE").toString();
-    settings->setValue("JOYSTICK_MAP", settings->value("JOYSTICK_MAP" + QString::number(joyId)));
-    qDebug() << settings->value("JOYSTICK_MAP").toString();
     saveSettings();
 }
 void Settings::setGameControllerMapping(int joyId, QString mapping) {
