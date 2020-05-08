@@ -9,7 +9,6 @@ Item {
     property string ax: ""
 
     Component.onCompleted: SdlGameController.enable()
-    Component.onDestruction: SdlGameController.disable()
 
     Connections {
         target: SdlGameController

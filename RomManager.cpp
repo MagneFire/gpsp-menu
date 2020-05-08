@@ -60,3 +60,9 @@ void RomManager::run(const QString path) {
         process.start("systemctl", QStringList() << "--user" << "start" << "gearboy");
     }
 }
+
+void RomManager::run(int index) {
+    QModelIndex modelIndex = model.index(index, 0, QModelIndex());
+    QVariant path = model.data(modelIndex, FileModel::PathRole);
+    run(path.toString());
+}

@@ -48,3 +48,6 @@ void Settings::setGameControllerMapping(int joyId, QString mapping) {
     qDebug() << settings->value("JOYSTICK_MAP" + QString::number(joyId)).toString();
     saveSettings();
 }
+QString Settings::getKeyMapping(int joyId) {
+    return settings->value("JOYSTICK_MAP" + QString::number(joyId)).toString();
+}

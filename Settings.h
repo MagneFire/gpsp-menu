@@ -14,6 +14,7 @@ public:
 
     void setActiveGameController(int joyId);
     void setGameControllerMapping(int joyId, QString mapping);
+    QString getKeyMapping(int joyId);
 private:
     Settings();
     virtual ~Settings() {};

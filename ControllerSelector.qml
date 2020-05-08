@@ -10,7 +10,6 @@ Item {
     property var controllerSelectedStr: qsTrId("id-gc-selected").arg(SdlGameController.activeJoyId)
 
     Component.onCompleted: SdlGameController.enable()
-    Component.onDestruction: SdlGameController.disable()
     Connections {
         target: SdlGameController
         onAxisEvent: {

@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import org.asteroid.controls 1.0
 import org.asteroid.utils 1.0
+import Nemo.KeepAlive 1.1
 import RomManager 1.0
 import SdlGameController 1.0
 
@@ -9,13 +10,44 @@ Application {
 
     centerColor: "#dfb103"
     outerColor: "#be4e0e"
+    // The item to highlight. -1 indicates that nothing is highlighted.
+    // Highlighting is only used when a controller button is pressed.
+    property int romSelectedIndex: -1
+    property int romMaxIndex: 0
+    property bool mainVisible: false
 
-    Component.onCompleted: SdlGameController.enable()
-    Component.onDestruction: SdlGameController.disable()
+    Component.onCompleted: {
+        DisplayBlanking.preventBlanking = true
+        SdlGameController.enable()
+    }
+
     Connections {
         target: SdlGameController
-        onAxisEvent: SdlGameController.activeJoyId = joyId
-        onButtonEvent: SdlGameController.activeJoyId = joyId
+        onAxisEvent: {
+            if (mainVisible) {
+                SdlGameController.activeJoyId = joyId
+                SdlGameController.activateKeyMapping(joyId)
+            }
+        }
+        onButtonEvent: {
+            if (mainVisible) {
+                SdlGameController.activeJoyId = joyId
+                SdlGameController.activateKeyMapping(joyId)
+                if (pressed) {
+                    if (button == SdlGameController.GC_BUTTON_DPAD_UP) {
+                        romSelectedIndex = romSelectedIndex > 1 ? romSelectedIndex - 1 : 0
+                    } else if (button == SdlGameController.GC_BUTTON_DPAD_DOWN) {
+                        romSelectedIndex = romSelectedIndex < romMaxIndex ? romSelectedIndex + 1 : romSelectedIndex;
+                    } else if (button == SdlGameController.GC_BUTTON_A) {
+                        if (romSelectedIndex > 0 && romSelectedIndex < romMaxIndex) {
+                            RomManager.run(romSelectedIndex);
+                        } else if (romSelectedIndex == romMaxIndex) {
+                            layerStack.push(settingsLayer)
+                        }
+                    }
+                }
+            }
+        }
     }
 
     Component { id: selectBeforeRunLayer;       SelectBeforeRun       { } }
@@ -39,30 +71,14 @@ Application {
     LayerStack {
         id: layerStack
         firstPage: firstPageComponent
+        // main is the first layer (layer 0).
+        // other layer may disable the controller
+        onLayersChanged: mainVisible = (layers.length == 0) ? true : false
     }
 
     Component {
         id: firstPageComponent
-
         Item {
-            Component {
-                id: lvHeader
-                Item {
-                    anchors.right: parent.right
-                    anchors.left: parent.left
-                    width: parent.width
-                    height: (DeviceInfo.hasRoundScreen ? app.height/12 : 0)
-                }
-            }
-            Component {
-                id: lvFooter
-                Item {
-                    anchors.right: parent.right
-                    anchors.left: parent.left
-                    width: parent.width
-                    height: (DeviceInfo.hasRoundScreen ? app.height/12 : 0) + (app.height/6)
-                }
-            }
             Label {
                 //% "No ROMs found please add them to the %1 folder"
                 text: qsTrId("id-no-roms").arg(RomManager.root)
@@ -76,10 +92,12 @@ Application {
             ListView {
                 id: romBrowser
                 anchors.fill: parent
-                // Add a header to the top and the bottom
-                // The paddingTopBottom will adjust the height based on whether the screen is round.
-                header: lvHeader
-                footer: lvFooter
+                currentIndex: romSelectedIndex
+                highlight: Rectangle { color: "white";  opacity: 0.2}
+                // Centers currently highlighted item.
+                preferredHighlightBegin: romBrowser.height/2 - app.height/12
+                preferredHighlightEnd: romBrowser.height/2 + app.height/12
+                highlightRangeMode: ListView.StrictlyEnforceRange
 
                 model: RomManager.getModel()
                 delegate: Item {
@@ -134,13 +152,14 @@ Application {
                         }
                     }
                 }
+                onCountChanged: romMaxIndex = romBrowser.count
             }
 
             IconButton {
                 id: add
                 visible: romBrowser.height - romBrowser.contentY <= 1
                 enabled: opacity == 1.0
-                opacity: visible ? 1.0 : 0.0
+                opacity: visible ? (romSelectedIndex == romMaxIndex ? 0.8 : 1.0) : 0.0
                 Behavior on opacity { NumberAnimation { duration: 200 } }
                 iconName:  "ios-settings-outline"
                 onClicked: layerStack.push(settingsLayer)

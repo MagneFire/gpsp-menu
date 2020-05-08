@@ -12,7 +12,6 @@ Item {
     property var controllerSelectedStr: qsTrId("id-selected-loaded").arg(SdlGameController.activeJoyId)
 
     Component.onCompleted: SdlGameController.enable()
-    Component.onDestruction: SdlGameController.disable()
     Connections {
         target: SdlGameController
         onAxisEvent: SdlGameController.activeJoyId = joyId

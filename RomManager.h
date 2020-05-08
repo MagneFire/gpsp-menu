@@ -27,6 +27,7 @@ public:
     void refresh();
     Q_INVOKABLE QObject* getModel();
     Q_INVOKABLE void run(const QString size);
+    Q_INVOKABLE void run(int index);
 signals:
     void rootChanged();
 private:

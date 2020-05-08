@@ -6,6 +6,7 @@ SdlGameController::SdlGameController()
   : joyId(-1)
   , activeJoyId(-1)
   , interval(100)
+  , lastActiveMapping(-1)
   , currentButtonToMap(GC_BUTTON_A)
 {
 
@@ -247,6 +248,12 @@ void SdlGameController::setAxisToMap(int axis, int direction) {
   value.append(QString::number(axis));
   value.prepend(direction ? "+" : "-");
   setKeyToMap(value);
+}
+
+void SdlGameController::activateKeyMapping(int joyId) {
+  if (lastActiveMapping == joyId) return;
+  QString mapping = settings->getKeyMapping(joyId);
+  SDL_GameControllerAddMapping(mapping.toStdString().c_str());
 }
 
 int SdlGameController::getJoyId() {

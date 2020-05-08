@@ -59,6 +59,8 @@ public:
     Q_INVOKABLE void setButtonToMap(int key);
     Q_INVOKABLE void setAxisToMap(int axis, int direction);
 
+    Q_INVOKABLE void activateKeyMapping(int joyId);
+
     int getJoyId();
     void setJoyId(int id);
 
@@ -87,6 +89,7 @@ private:
     int activeJoyId;
     int joyCount;
     int interval;
+    int lastActiveMapping;
     QString buttonMap[GC_BUTTON_MAX];
     GpspButtons currentButtonToMap;
 

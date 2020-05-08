@@ -10,6 +10,16 @@ Item {
     signal controllerMapClicked
     signal controllerSelectorClicked
 
+    Component.onCompleted: SdlGameController.enable()
+
+    Connections {
+        target: SdlGameController
+        onAxisEvent: {
+        }
+        onButtonEvent: {
+        }
+    }
+
     LayerStack {
         id: layerStack
         firstPage: firstPageComponent
