@@ -25,14 +25,18 @@ Application {
         target: SdlGameController
         onAxisEvent: {
             if (mainVisible) {
-                SdlGameController.activeJoyId = joyId
-                SdlGameController.activateKeyMapping(joyId)
+                if (SdlGameController.activeJoyId != joyId) {
+                    SdlGameController.activeJoyId = joyId
+                    SdlGameController.activateKeyMapping(joyId)
+                }
             }
         }
         onButtonEvent: {
             if (mainVisible) {
-                SdlGameController.activeJoyId = joyId
-                SdlGameController.activateKeyMapping(joyId)
+                if (SdlGameController.activeJoyId != joyId) {
+                    SdlGameController.activeJoyId = joyId
+                    SdlGameController.activateKeyMapping(joyId)
+                }
                 if (pressed) {
                     if (button == SdlGameController.GC_BUTTON_DPAD_UP) {
                         romSelectedIndex = romSelectedIndex > 1 ? romSelectedIndex - 1 : 0
@@ -157,7 +161,7 @@ Application {
 
             IconButton {
                 id: add
-                visible: romBrowser.height - romBrowser.contentY <= 1
+                visible: romBrowser.atYEnd
                 enabled: opacity == 1.0
                 opacity: visible ? (romSelectedIndex == romMaxIndex ? 0.8 : 1.0) : 0.0
                 Behavior on opacity { NumberAnimation { duration: 200 } }

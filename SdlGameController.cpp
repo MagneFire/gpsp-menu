@@ -13,7 +13,7 @@ SdlGameController::SdlGameController()
   int ret;
   ret = SDL_Init(SDL_INIT_GAMECONTROLLER | SDL_INIT_JOYSTICK);
   if (ret != 0) {
-    fprintf(stderr, "SDL_Init failed: %s\n", SDL_GetError());
+    fprintf(stderr, "SDL_Init failed: %s\r\n", SDL_GetError());
     exit(1);
   }
   SDL_JoystickEventState(SDL_ENABLE);
@@ -65,18 +65,25 @@ void SdlGameController::enable() {
 }
 
 void SdlGameController::enable(int joyId) {
-    SDL_GameController *joystick;
+    SDL_Joystick *joystick;
+    SDL_GameController *gameController;
     SDL_JoystickGUID guid;
     char *mapping;
 		char* guidStr = new char[64];
-    joystick = SDL_GameControllerOpen(joyId);
-    mapping = SDL_GameControllerMapping(joystick);
-    guid = SDL_JoystickGetGUID(SDL_GameControllerGetJoystick(joystick));
+    if (SDL_IsGameController(joyId)) {
+      gameController = SDL_GameControllerOpen(joyId);
+      mapping = SDL_GameControllerMapping(gameController);
+      joystick = SDL_GameControllerGetJoystick(gameController);
+      printf("Gamecontroller Name: %s\r\n", SDL_GameControllerName(gameController));
+      printf("Gamecontroller Mapping: %s\r\n", mapping);
+    } else {
+      joystick = SDL_JoystickOpen(joyId);
+      printf("Joystick Name: %s\r\n", SDL_JoystickName(joystick));
+    }
+    guid = SDL_JoystickGetGUID(joystick);
     SDL_JoystickGetGUIDString(guid, guidStr, 64);
 
-    printf("Gamecontroller Name: %s\n", SDL_GameControllerName(joystick));
-    printf("Gamecontroller Mapping: %s\n", mapping);
-    printf("Gamecontroller GUID: %s\n", guidStr);
+    printf("Gamecontroller/Joystick GUID: %s\r\n", guidStr);
     enableTimer();
 }
 void SdlGameController::disable() {
@@ -108,6 +115,10 @@ void SdlGameController::onEventTrigger() {
         //printf("SDL_JOYAXISMOTION: %d %d\r\n", event.jaxis.axis, event.jaxis.value);
         emit joyAxisEvent(event.jaxis.which, event.jaxis.axis, event.jaxis.value);
         break;
+      case SDL_JOYHATMOTION:
+        //printf("SDL_JOYHATMOTION: %d %d\r\n", event.jhat.hat, event.jhat.value);
+        emit joyHatEvent(event.jhat.which, event.jhat.hat, event.jhat.value);
+        break;
       case SDL_JOYBUTTONDOWN:
         //printf("SDL_JOYBUTTONDOWN: %d\r\n", event.jbutton.button);
         emit joyButtonEvent(event.jbutton.which, event.jbutton.state == SDL_PRESSED, event.jbutton.button);
@@ -129,10 +140,10 @@ void SdlGameController::onEventTrigger() {
         emit buttonEvent(event.cbutton.which, event.cbutton.state == SDL_PRESSED, event.cbutton.button);
         break;
       default:
+        //printf("onEventTrigger: UNKNOWN! %d\r\n", event.type);
         break;
     }
   }
-
 }
 
 QString SdlGameController::getCurrentKeyToMapString() {
@@ -179,6 +190,10 @@ QString SdlGameController::getCurrentKeyToMapString() {
 
 int SdlGameController::getCurrentKeyToMap() {
   return currentButtonToMap;
+}
+
+void SdlGameController::resetMapper() {
+  currentButtonToMap = GC_BUTTON_A;
 }
 
 void SdlGameController::setKeyToMap(QString value, int skip) {
@@ -235,15 +250,26 @@ void SdlGameController::setKeyToMap(QString value, int skip) {
 
 void SdlGameController::setButtonToMap(int key) {
   if (joyId == -1) return;
-  printf("%d\r\n", key);
+  //printf("setButtonToMap: %d\r\n", key);
   QString value = QString("b");
   value.append(QString::number(key));
   setKeyToMap(value, (key == -1));
 }
 
+
+void SdlGameController::setHatToMap(int hat, int val) {
+  if (joyId == -1) return;
+  //printf("setHatToMap: %d %d\r\n", hat, val);
+  QString value = QString("h");
+  value.append(QString::number(hat));
+  value.append(".");
+  value.append(QString::number(val));
+  setKeyToMap(value);
+}
+
 void SdlGameController::setAxisToMap(int axis, int direction) {
   if (joyId == -1) return;
-  printf("setAxisToMap: %d %d\r\n", axis, direction);
+  //printf("setAxisToMap: %d %d\r\n", axis, direction);
   QString value = QString("a");
   value.append(QString::number(axis));
   value.prepend(direction ? "+" : "-");
@@ -253,6 +279,8 @@ void SdlGameController::setAxisToMap(int axis, int direction) {
 void SdlGameController::activateKeyMapping(int joyId) {
   if (lastActiveMapping == joyId) return;
   QString mapping = settings->getKeyMapping(joyId);
+  //printf("activateKeyMapping: %s\r\n", mapping.toStdString().c_str());
+  if (mapping.isEmpty()) return;
   SDL_GameControllerAddMapping(mapping.toStdString().c_str());
 }
 

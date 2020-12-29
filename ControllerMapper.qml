@@ -6,7 +6,10 @@ import SdlGameController 1.0
 Item {
     signal close
 
-    Component.onCompleted: SdlGameController.enable()
+    Component.onCompleted: {
+        SdlGameController.resetMapper()
+        SdlGameController.enable()
+    }
 
     Connections {
         target: SdlGameController
@@ -33,6 +36,19 @@ Item {
                     close()
                 } else {
                     SdlGameController.setButtonToMap(button)
+                }
+            }
+        }
+        onJoyHatEvent: {
+            console.log("onJoyHatEvent " + joyId + " " + hat + " " + value)
+            if (SdlGameController.joyId == -1) {
+                SdlGameController.joyId = joyId
+                SdlGameController.disableBut(SdlGameController.joyId)
+            } else if (value > 0) { // If not center.
+                if (SdlGameController.map == SdlGameController.GC_BUTTON_MAX) {
+                    close()
+                } else {
+                    SdlGameController.setHatToMap(hat, value)
                 }
             }
         }

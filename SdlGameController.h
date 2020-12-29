@@ -56,7 +56,9 @@ public:
     int getCount();
     QString getCurrentKeyToMapString();
     int getCurrentKeyToMap();
+    Q_INVOKABLE void resetMapper();
     Q_INVOKABLE void setButtonToMap(int key);
+    Q_INVOKABLE void setHatToMap(int hat, int val);
     Q_INVOKABLE void setAxisToMap(int axis, int direction);
 
     Q_INVOKABLE void activateKeyMapping(int joyId);
@@ -73,6 +75,7 @@ signals:
     void buttonEvent(int joyId, int pressed, int button);
 
     void joyAxisEvent(int joyId, int axis, int value);
+    void joyHatEvent(int joyId, int hat, int value);
     void joyButtonEvent(int joyId, int pressed, int button);
 
     void countChanged();
