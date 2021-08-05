@@ -43,13 +43,13 @@ int main(int argc, char *argv[])
 
     romManager->setRoot(romPath);
     romManager->refresh();
-   
+
     QScopedPointer<QGuiApplication> app(AsteroidApp::application(argc, argv));
     QScopedPointer<QQuickView> view(AsteroidApp::createView());
 
     qmlRegisterSingletonType<SdlGameController>("SdlGameController", 1, 0, "SdlGameController", &SdlGameController::qmlInstance);
     qmlRegisterSingletonType<RomManager>("RomManager", 1, 0, "RomManager", &RomManager::qmlInstance);
-    view->setSource(QUrl("qrc:/main.qml"));
+    view->setSource(QUrl("qrc:/qml/main.qml"));
     view->resize(app->primaryScreen()->size());
     view->show();
     return app->exec();
