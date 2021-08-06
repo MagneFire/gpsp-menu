@@ -4,7 +4,8 @@ import org.asteroid.utils 1.0
 import SdlGameController 1.0
 
 Item {
-    signal close
+    id: root
+    property var pop
 
     Component.onCompleted: {
         SdlGameController.resetMapper()
@@ -20,7 +21,7 @@ Item {
                 SdlGameController.disableBut(SdlGameController.joyId)
             } else if (Math.abs(value) > 32000) {
                 if (SdlGameController.map == SdlGameController.GC_BUTTON_MAX) {
-                    close()
+                    root.pop()
                 } else {
                     SdlGameController.setAxisToMap(axis, value > 0)
                 }
@@ -33,7 +34,7 @@ Item {
                 SdlGameController.disableBut(SdlGameController.joyId)
             } else if (pressed) {
                 if (SdlGameController.map == SdlGameController.GC_BUTTON_MAX) {
-                    close()
+                    root.pop()
                 } else {
                     SdlGameController.setButtonToMap(button)
                 }
@@ -46,7 +47,7 @@ Item {
                 SdlGameController.disableBut(SdlGameController.joyId)
             } else if (value > 0) { // If not center.
                 if (SdlGameController.map == SdlGameController.GC_BUTTON_MAX) {
-                    close()
+                    root.pop()
                 } else {
                     SdlGameController.setHatToMap(hat, value)
                 }
@@ -92,7 +93,7 @@ Item {
         onClicked: {
             console.log(SdlGameController.map + " " + SdlGameController.GC_BUTTON_MAX)
             if (SdlGameController.map == SdlGameController.GC_BUTTON_MAX) {
-                close()
+                root.pop()
             } else {
                 SdlGameController.setButtonToMap(-1)
             }

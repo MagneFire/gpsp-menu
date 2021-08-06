@@ -55,14 +55,9 @@ Application {
     }
 
     Component { id: selectBeforeRunLayer;       SelectBeforeRun       { } }
-    Component { id: controllerTestLayer;        ControllerTest       { } }
-    Component {
-        id: controllerMapLayer
-        ControllerMapper {
-            onClose: layerStack.popAnim()
-        }
-    }
-    Component { id: controllerSelectorLayer;    ControllerSelector       { } }
+    Component { id: controllerTestLayer;        ControllerTest        { } }
+    Component { id: controllerMapLayer;         ControllerMapper      { } }
+    Component { id: controllerSelectorLayer;    ControllerSelector    { } }
     Component {
         id: settingsLayer
         Settings {
