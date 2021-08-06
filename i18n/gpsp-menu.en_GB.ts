@@ -9,7 +9,7 @@
         <translation>Gameboy</translation>
     </message>
     <message id="id-no-roms">
-        <location filename="../src/qml/main.qml" line="88"/>
+        <location filename="../src/qml/main.qml" line="83"/>
         <source>No ROMs found please add them to the %1 folder</source>
         <translation>No ROMs found please add them to the %1 folder</translation>
     </message>
@@ -24,18 +24,18 @@
         <translation>Axis: %1</translation>
     </message>
     <message id="id-button-map-start">
-        <location filename="../src/qml/ControllerMapper.qml" line="59"/>
+        <location filename="../src/qml/ControllerMapper.qml" line="60"/>
         <source>Press a button to start mapping</source>
         <translation>Press a button to start mapping</translation>
     </message>
     <message id="id-button-map">
-        <location filename="../src/qml/ControllerMapper.qml" line="69"/>
+        <location filename="../src/qml/ControllerMapper.qml" line="70"/>
         <source>Press %1 button, tap to ignore</source>
         <oldsource>Press %1 button</oldsource>
         <translation>Press %1 button, tap to ignore</translation>
     </message>
     <message id="id-controller-mapped">
-        <location filename="../src/qml/ControllerMapper.qml" line="79"/>
+        <location filename="../src/qml/ControllerMapper.qml" line="80"/>
         <source>Controller mapped, press a button or tap to exit.</source>
         <translation>Controller mapped, press a button or tap to exit.</translation>
     </message>
@@ -50,17 +50,17 @@
         <translation>Controller %1 selected.</translation>
     </message>
     <message id="id-settings-map-test">
-        <location filename="../src/qml/Settings.qml" line="114"/>
+        <location filename="../src/qml/Settings.qml" line="108"/>
         <source>Test controller mapping</source>
         <translation>Test controller mapping</translation>
     </message>
     <message id="id-settings-map">
-        <location filename="../src/qml/Settings.qml" line="119"/>
+        <location filename="../src/qml/Settings.qml" line="113"/>
         <source>Map a controller</source>
         <translation>Map a controller</translation>
     </message>
     <message id="id-settings-select">
-        <location filename="../src/qml/Settings.qml" line="124"/>
+        <location filename="../src/qml/Settings.qml" line="118"/>
         <source>Select a controller</source>
         <translation>Select a controller</translation>
     </message>
