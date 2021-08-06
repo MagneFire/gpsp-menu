@@ -65,12 +65,12 @@
         <translation>Select a controller</translation>
     </message>
     <message id="id-warn-no-controller-selected">
-        <location filename="../src/qml/SelectBeforeRun.qml" line="10"/>
-        <source>No controller selected, press a button on the controller to continue or tap to skip.</source>
-        <translation>No controller selected, press a button on the controller to continue or tap to skip.</translation>
+        <location filename="../src/qml/SelectBeforeRun.qml" line="13"/>
+        <source>No controller selected, do you wish to continue?</source>
+        <translation>No controller selected, do you wish to continue?</translation>
     </message>
     <message id="id-selected-loaded">
-        <location filename="../src/qml/SelectBeforeRun.qml" line="12"/>
+        <location filename="../src/qml/SelectBeforeRun.qml" line="15"/>
         <source>Controller %1 selected. Loading ROM...</source>
         <translation>Controller %1 selected. Loading ROM...</translation>
     </message>

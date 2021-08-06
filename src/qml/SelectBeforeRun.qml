@@ -5,8 +5,11 @@ import RomManager 1.0
 import SdlGameController 1.0
 
 Item {
+    id: root
+    property var pop
+
     property var path
-    //% "No controller selected, press a button on the controller to continue or tap to skip."
+    //% "No controller selected, do you wish to continue?"
     property var noControllerSelectedStr: qsTrId("id-warn-no-controller-selected")
     //% "Controller %1 selected. Loading ROM..."
     property var controllerSelectedStr: qsTrId("id-selected-loaded").arg(SdlGameController.activeJoyId)
@@ -22,15 +25,28 @@ Item {
         id: controllerMessage
         text: (SdlGameController.activeJoyId == -1) ? noControllerSelectedStr : controllerSelectedStr
         wrapMode: Text.WordWrap
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
+        anchors.centerIn: parent
         width: parent.width - (DeviceInfo.hasRoundScreen ? Dims.w(5) : 0)
         horizontalAlignment: Text.AlignHCenter
     }
-    MouseArea {
-        width: parent.width
-        height: parent.height
-        anchors.centerIn: parent
-        onClicked: RomManager.run(path);
+
+    IconButton {
+        iconName: "ios-close-circle-outline"
+        edge: undefinedEdge
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.horizontalCenterOffset: -Dims.w(15)
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: Dims.h(15)
+        onClicked: root.pop()
+    }
+
+    IconButton {
+        iconName: "ios-checkmark-circle-outline"
+        edge: undefinedEdge
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.horizontalCenterOffset: Dims.w(15)
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: Dims.h(15)
+        onClicked: RomManager.run(path)
     }
 }
