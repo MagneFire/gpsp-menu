@@ -9,7 +9,7 @@
         <translation>Gameboy</translation>
     </message>
     <message id="id-no-roms">
-        <location filename="../src/qml/main.qml" line="83"/>
+        <location filename="../src/qml/main.qml" line="82"/>
         <source>No ROMs found please add them to the %1 folder</source>
         <translation>No ROMs found please add them to the %1 folder</translation>
     </message>
@@ -24,18 +24,18 @@
         <translation>Axis: %1</translation>
     </message>
     <message id="id-button-map-start">
-        <location filename="../src/qml/ControllerMapper.qml" line="60"/>
+        <location filename="../src/qml/ControllerMapper.qml" line="54"/>
         <source>Press a button to start mapping</source>
         <translation>Press a button to start mapping</translation>
     </message>
     <message id="id-button-map">
-        <location filename="../src/qml/ControllerMapper.qml" line="70"/>
+        <location filename="../src/qml/ControllerMapper.qml" line="64"/>
         <source>Press %1 button, tap to ignore</source>
         <oldsource>Press %1 button</oldsource>
         <translation>Press %1 button, tap to ignore</translation>
     </message>
     <message id="id-controller-mapped">
-        <location filename="../src/qml/ControllerMapper.qml" line="80"/>
+        <location filename="../src/qml/ControllerMapper.qml" line="74"/>
         <source>Controller mapped, press a button or tap to exit.</source>
         <translation>Controller mapped, press a button or tap to exit.</translation>
     </message>
@@ -63,16 +63,6 @@
         <location filename="../src/qml/Settings.qml" line="118"/>
         <source>Select a controller</source>
         <translation>Select a controller</translation>
-    </message>
-    <message id="id-warn-no-controller-selected">
-        <location filename="../src/qml/SelectBeforeRun.qml" line="13"/>
-        <source>No controller selected, do you wish to continue?</source>
-        <translation>No controller selected, do you wish to continue?</translation>
-    </message>
-    <message id="id-selected-loaded">
-        <location filename="../src/qml/SelectBeforeRun.qml" line="15"/>
-        <source>Controller %1 selected. Loading ROM...</source>
-        <translation>Controller %1 selected. Loading ROM...</translation>
     </message>
 </context>
 </TS>

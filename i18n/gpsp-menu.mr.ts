@@ -4,17 +4,17 @@
 <context>
     <name></name>
     <message id="id-button-map-start">
-        <location filename="../src/qml/ControllerMapper.qml" line="60"/>
+        <location filename="../src/qml/ControllerMapper.qml" line="54"/>
         <source>Press a button to start mapping</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="id-button-map">
-        <location filename="../src/qml/ControllerMapper.qml" line="70"/>
+        <location filename="../src/qml/ControllerMapper.qml" line="64"/>
         <source>Press %1 button, tap to ignore</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="id-controller-mapped">
-        <location filename="../src/qml/ControllerMapper.qml" line="80"/>
+        <location filename="../src/qml/ControllerMapper.qml" line="74"/>
         <source>Controller mapped, press a button or tap to exit.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -39,18 +39,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message id="id-no-roms">
-        <location filename="../src/qml/main.qml" line="83"/>
+        <location filename="../src/qml/main.qml" line="82"/>
         <source>No ROMs found please add them to the %1 folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="id-warn-no-controller-selected">
-        <location filename="../src/qml/SelectBeforeRun.qml" line="13"/>
-        <source>No controller selected, do you wish to continue?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="id-selected-loaded">
-        <location filename="../src/qml/SelectBeforeRun.qml" line="15"/>
-        <source>Controller %1 selected. Loading ROM...</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="id-settings-map-test">
