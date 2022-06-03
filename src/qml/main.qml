@@ -23,7 +23,7 @@ Application {
 
     Connections {
         target: SdlGameController
-        onAxisEvent: {
+        function onAxisEvent() {
             if (mainVisible) {
                 if (SdlGameController.activeJoyId != joyId) {
                     SdlGameController.activeJoyId = joyId
@@ -31,7 +31,7 @@ Application {
                 }
             }
         }
-        onButtonEvent: {
+        function onButtonEvent() {
             if (mainVisible) {
                 if (SdlGameController.activeJoyId != joyId) {
                     SdlGameController.activeJoyId = joyId

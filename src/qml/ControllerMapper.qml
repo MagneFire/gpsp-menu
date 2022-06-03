@@ -14,7 +14,7 @@ Item {
 
     Connections {
         target: SdlGameController
-        onJoyAxisEvent: {
+        function onJoyAxisEvent(joyId, axis, value) {
             console.log("onAxisEvent " + joyId + " " + axis + " " + value)
             SdlGameController.select(joyId)
             if (Math.abs(value) > 32000) {
@@ -25,7 +25,7 @@ Item {
                 }
             }
         }
-        onJoyButtonEvent: {
+        function onJoyButtonEvent(joyId, pressed, button) {
             console.log("onButtonEvent " + joyId + " " + pressed + " " + button)
             SdlGameController.select(joyId)
             if (pressed) {
@@ -36,7 +36,7 @@ Item {
                 }
             }
         }
-        onJoyHatEvent: {
+        function onJoyHatEvent(joyId, hat, value) {
             console.log("onJoyHatEvent " + joyId + " " + hat + " " + value)
             SdlGameController.select(joyId)
             if (value > 0) { // If not center.
