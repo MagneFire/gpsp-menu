@@ -11,15 +11,16 @@
 #include "RomManager.h"
 
 void setupPaths() {
-    if (!QFile::exists(QDir::homePath() + "/.gpsp/gpsp.conf")) {
+    if (!QFile::exists(QDir::homePath() + "/.config/gpsp/gpsp.conf")) {
         qDebug() << "Config file not found, setting up gpsp-menu.";
-        qDebug() << "Config path " << QDir::homePath() + "/.gpsp";
-        QDir().mkpath(QDir::homePath() + "/.gpsp");
+        qDebug() << "Config path " << QDir::homePath() + "/.config/gpsp";
+        QDir().mkpath(QDir::homePath() + "/.config");
+        QDir().mkpath(QDir::homePath() + "/.config/gpsp");
         QDir().mkpath(QDir::homePath() + "/roms");
 
-        QSettings settings(QDir::homePath() + "/.gpsp/gpsp.conf", QSettings::IniFormat);
+        QSettings settings(QDir::homePath() + "/.config/gpsp/gpsp.conf", QSettings::IniFormat);
         settings.setValue("GAME_PATH", "");
-        settings.setValue("GBA_BIOS", QDir::homePath() + "/.gpsp/gba_bios.bin");
+        settings.setValue("GBA_BIOS", "/usr/share/gpsp/gba_bios.bin");
         settings.setValue("KEY_MAP", "1, 2, 3, 4, 5, 6");
         settings.setValue("ROM_PATH", QDir::homePath() + "/roms");
         settings.sync();

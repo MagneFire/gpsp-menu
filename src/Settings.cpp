@@ -12,7 +12,7 @@ Settings* Settings::getInstance() {
 }
 
 Settings::Settings() {
-    settings = new QSettings(QDir::homePath() + "/.gpsp/gpsp.conf", QSettings::IniFormat);
+    settings = new QSettings(QDir::homePath() + "/.config/gpsp/gpsp.conf", QSettings::IniFormat);
     if(settings->status() == QSettings::NoError) {
         qDebug() << "Load successful";
     } else {
