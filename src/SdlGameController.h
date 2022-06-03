@@ -51,7 +51,7 @@ public:
     Q_INVOKABLE void enable();
     Q_INVOKABLE void disable(int joyId);
     Q_INVOKABLE void disable();
-    Q_INVOKABLE void disableBut(int joyId);
+    Q_INVOKABLE void select(int joyId);
 
     int getCount();
     QString getCurrentKeyToMapString();

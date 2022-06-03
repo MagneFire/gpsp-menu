@@ -93,9 +93,11 @@ void SdlGameController::disable() {
   disableTimer();
 }
 
-void SdlGameController::disableBut(int joyId) {
+void SdlGameController::select(int id) {
+  if (joyId == id) return;
+  setJoyId(id);
   for (int i=0; i<getCount(); ++i) {
-    if (i != joyId) {
+    if (i != id) {
       disable(i);
     }
   }
@@ -147,41 +149,29 @@ void SdlGameController::onEventTrigger() {
 }
 
 QString SdlGameController::getCurrentKeyToMapString() {
-
     switch(currentButtonToMap) {
       case GC_BUTTON_A:
         return "A";
-        break;
       case GC_BUTTON_B:
         return "B";
-        break;
       case GC_BUTTON_MENU:
         return "MENU";
-        break;
       case GC_BUTTON_START:
         return "START";
-        break;
       case GC_BUTTON_SELECT:
         return "SELECT";
-        break;
       case GC_BUTTON_L:
         return "L";
-        break;
       case GC_BUTTON_R:
         return "R";
-        break;
       case GC_BUTTON_DPAD_UP:
         return "DPAD UP";
-        break;
       case GC_BUTTON_DPAD_DOWN:
         return "DPAD DOWN";
-        break;
       case GC_BUTTON_DPAD_LEFT:
         return "DPAD LEFT";
-        break;
       case GC_BUTTON_DPAD_RIGHT:
         return "DPAD RIGHT";
-        break;
       default:
         break;
     }

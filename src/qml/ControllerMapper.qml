@@ -16,10 +16,8 @@ Item {
         target: SdlGameController
         onJoyAxisEvent: {
             console.log("onAxisEvent " + joyId + " " + axis + " " + value)
-            if (SdlGameController.joyId == -1) {
-                SdlGameController.joyId = joyId
-                SdlGameController.disableBut(SdlGameController.joyId)
-            } else if (Math.abs(value) > 32000) {
+            SdlGameController.select(joyId)
+            if (Math.abs(value) > 32000) {
                 if (SdlGameController.map == SdlGameController.GC_BUTTON_MAX) {
                     root.pop()
                 } else {
@@ -29,10 +27,8 @@ Item {
         }
         onJoyButtonEvent: {
             console.log("onButtonEvent " + joyId + " " + pressed + " " + button)
-            if (SdlGameController.joyId == -1) {
-                SdlGameController.joyId = joyId
-                SdlGameController.disableBut(SdlGameController.joyId)
-            } else if (pressed) {
+            SdlGameController.select(joyId)
+            if (pressed) {
                 if (SdlGameController.map == SdlGameController.GC_BUTTON_MAX) {
                     root.pop()
                 } else {
@@ -42,10 +38,8 @@ Item {
         }
         onJoyHatEvent: {
             console.log("onJoyHatEvent " + joyId + " " + hat + " " + value)
-            if (SdlGameController.joyId == -1) {
-                SdlGameController.joyId = joyId
-                SdlGameController.disableBut(SdlGameController.joyId)
-            } else if (value > 0) { // If not center.
+            SdlGameController.select(joyId)
+            if (value > 0) { // If not center.
                 if (SdlGameController.map == SdlGameController.GC_BUTTON_MAX) {
                     root.pop()
                 } else {
