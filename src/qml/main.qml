@@ -54,7 +54,6 @@ Application {
         }
     }
 
-    Component { id: selectBeforeRunLayer;       SelectBeforeRun       { } }
     Component { id: controllerTestLayer;        ControllerTest        { } }
     Component { id: controllerMapLayer;         ControllerMapper      { } }
     Component { id: controllerSelectorLayer;    ControllerSelector    { } }
@@ -143,11 +142,7 @@ Application {
                         height: parent.height
                         anchors.centerIn: parent
                         onClicked: {
-                            if (SdlGameController.activeJoyId == -1) {
-                                layerStack.push(selectBeforeRunLayer, {"path": path})
-                            } else {
-                                RomManager.run(path);
-                            }
+                            RomManager.run(path);
                         }
                     }
                 }
