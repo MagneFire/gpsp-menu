@@ -30,4 +30,7 @@ add_subdirectory(src)
 build_translations(i18n)
 generate_desktop(${CMAKE_SOURCE_DIR} gpsp-menu)
 
+configure_file("gpsp.service.in" "gpsp.service")
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/gpsp.service DESTINATION /usr/lib/systemd/user)
+
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
