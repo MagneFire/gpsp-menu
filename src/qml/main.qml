@@ -156,6 +156,11 @@ Application {
                 opacity: visible ? (romSelectedIndex == romMaxIndex ? 0.8 : 1.0) : 0.0
                 Behavior on opacity { NumberAnimation { duration: 200 } }
                 iconName:  "ios-settings-outline"
+                anchors { 
+                    bottom: parent.bottom
+                    horizontalCenter: parent.horizontalCenter
+                    bottomMargin: Dims.iconButtonMargin
+                }
                 onClicked: layerStack.push(settingsLayer)
             }
         }
