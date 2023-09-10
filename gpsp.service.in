@@ -7,9 +7,7 @@ Type=simple
 EnvironmentFile=-/usr/share/gpsp/*.conf
 EnvironmentFile=-/etc/asteroid/machine.conf
 EnvironmentFile=-%h/.config/gpsp/*.conf
-ExecStartPre=-/usr/sbin/mcetool -D on
 ExecStart=/usr/bin/gpsp
-ExecStopPost=-/usr/sbin/mcetool -D off
 
 [Install]
 WantedBy=default.target
