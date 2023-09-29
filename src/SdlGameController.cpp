@@ -301,7 +301,8 @@ void SdlGameController::writeMapping() {
   guid = SDL_JoystickGetDeviceGUID(joyId);
   SDL_JoystickGetGUIDString(guid, guidStr, 64);
   map.append(guidStr);
-  map.append(",Mapped Controller");
+  map.append(",");
+  map.append(SDL_JoystickNameForIndex(joyId));
   for (int i = 0; i < GC_BUTTON_MAX; ++i) {
     if (buttonMap[i] == "b-1")
       continue;
