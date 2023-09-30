@@ -24,6 +24,7 @@ void setupPaths() {
     settings.setValue("GBA_BIOS", "/usr/share/gpsp/gba_bios.bin");
     settings.setValue("KEY_MAP", "1, 2, 3, 4, 5, 6");
     settings.setValue("ROM_PATH", QDir::homePath() + "/roms");
+    settings.setValue("MAPPINGS_PATH", QDir::homePath() + "/.config/gpsp/gamecontrollerdb.txt");
     settings.sync();
     if(settings.status() == QSettings::NoError) {
         qDebug() << "Config file was properly setup.";
@@ -39,6 +40,7 @@ int main(int argc, char *argv[])
     setupPaths();
 
     Settings * settings = Settings::getInstance();
+    settings->loadMappings();
     QString romPath = settings->getRomPath();
     qDebug() << romPath;
 

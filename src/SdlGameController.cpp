@@ -344,7 +344,8 @@ void SdlGameController::writeMapping() {
     }
     map.append(buttonMap[i]);
   }
+  map.append(",platform:Linux,");
   printf("%s\r\n", map.toStdString().c_str());
-  settings->setGameControllerMapping(joyId, map.toStdString().c_str());
-  setActiveJoyId(joyId);
+  settings->addMapping(guidStr, map.toStdString().c_str());
+  settings->saveMappings();
 }

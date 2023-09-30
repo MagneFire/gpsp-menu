@@ -15,6 +15,12 @@ public:
     void setActiveGameController(int joyId);
     void setGameControllerMapping(int joyId, QString mapping);
     QString getKeyMapping(int joyId);
+
+    QString getMappingsPath() const;
+    void setMappingsPath(QString path);
+    void loadMappings();
+    void saveMappings();
+    void addMapping(QString guid, QString mapping);
 private:
     Settings();
     virtual ~Settings() {};
@@ -22,6 +28,7 @@ private:
     void saveSettings();
     static Settings* instance;
     QSettings * settings;
+    QStringList mappings;
 };
 
 #endif

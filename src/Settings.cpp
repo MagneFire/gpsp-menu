@@ -51,3 +51,46 @@ void Settings::setGameControllerMapping(int joyId, QString mapping) {
 QString Settings::getKeyMapping(int joyId) {
     return settings->value("JOYSTICK_MAP" + QString::number(joyId)).toString();
 }
+
+QString Settings::getMappingsPath() const {
+    return settings->value("MAPPINGS_PATH").toString();
+}
+
+void Settings::setMappingsPath(QString path) {
+    settings->setValue("MAPPINGS_PATH", path);
+    qDebug() << settings->value("MAPPINGS_PATH").toString();
+    saveSettings();
+}
+
+void Settings::loadMappings() {
+    QFile mappingsFile(getMappingsPath());
+    if (mappingsFile.open(QIODevice::ReadOnly | QFile::Text)) {
+        QTextStream in(&mappingsFile);
+        mappings.clear();
+        while (!in.atEnd()) {
+            QString line = in.readLine();
+            mappings << line;
+        }
+        mappingsFile.close();
+    }
+}
+
+void Settings::saveMappings() {
+    QFile mappingsFile(getMappingsPath());
+    if (mappingsFile.open(QIODevice::WriteOnly | QFile::Text)) {
+        QTextStream stream(&mappingsFile);
+        for ( const auto& mapping : mappings ) {
+            stream << mapping << '\n';
+        }
+        mappingsFile.close();
+    }
+}
+
+void Settings::addMapping(QString guid, QString mapping) {
+    int index = mappings.indexOf(QRegExp("^" + guid + ".+"));
+    if (index >= 0) {
+        mappings[index] = mapping;
+    } else {
+        mappings.append(mapping);
+    }
+}
