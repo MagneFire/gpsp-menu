@@ -266,12 +266,14 @@ void SdlGameController::setAxisToMap(int axis, int direction) {
   setKeyToMap(value);
 }
 
-void SdlGameController::activateKeyMapping(int joyId) {
-  if (lastActiveMapping == joyId) return;
-  QString mapping = settings->getKeyMapping(joyId);
-  //printf("activateKeyMapping: %s\r\n", mapping.toStdString().c_str());
-  if (mapping.isEmpty()) return;
-  SDL_GameControllerAddMapping(mapping.toStdString().c_str());
+void SdlGameController::activateMappings() {
+  const auto mappingsPath = settings->getMappingsPath();
+  int ret = SDL_GameControllerAddMappingsFromFile(mappingsPath.toStdString().c_str());
+  if (ret == -1) {
+    printf("Failure adding new mappings: %s\n", SDL_GetError());
+  } else {
+    printf("Added %d mappings.\n", ret);
+  }
 }
 
 int SdlGameController::getJoyId() {

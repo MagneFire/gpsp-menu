@@ -61,7 +61,7 @@ public:
     Q_INVOKABLE void setHatToMap(int hat, int val);
     Q_INVOKABLE void setAxisToMap(int axis, int direction);
 
-    Q_INVOKABLE void activateKeyMapping(int joyId);
+    Q_INVOKABLE void activateMappings();
 
     int getJoyId();
     void setJoyId(int id);

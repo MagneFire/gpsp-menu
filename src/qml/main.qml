@@ -19,36 +19,24 @@ Application {
     Component.onCompleted: {
         DisplayBlanking.preventBlanking = true
         SdlGameController.enable()
+        SdlGameController.activateMappings()
     }
 
     Connections {
         target: SdlGameController
-        function onAxisEvent() {
-            if (mainVisible) {
-                if (SdlGameController.activeJoyId != joyId) {
-                    SdlGameController.activeJoyId = joyId
-                    SdlGameController.activateKeyMapping(joyId)
-                }
-            }
-        }
-        function onButtonEvent() {
-            if (mainVisible) {
-                if (SdlGameController.activeJoyId != joyId) {
-                    SdlGameController.activeJoyId = joyId
-                    SdlGameController.activateKeyMapping(joyId)
-                }
-                if (pressed) {
-                    if (button == SdlGameController.GC_BUTTON_DPAD_UP) {
-                        romSelectedIndex = romSelectedIndex > 1 ? romSelectedIndex - 1 : 0
-                    } else if (button == SdlGameController.GC_BUTTON_DPAD_DOWN) {
-                        romSelectedIndex = romSelectedIndex < romMaxIndex ? romSelectedIndex + 1 : romSelectedIndex;
-                    } else if (button == SdlGameController.GC_BUTTON_A) {
-                        if (romSelectedIndex > 0 && romSelectedIndex < romMaxIndex) {
-                            RomManager.run(romSelectedIndex);
-                        } else if (romSelectedIndex == romMaxIndex) {
-                            layerStack.push(settingsLayer)
-                        }
-                    }
+        function onButtonEvent(joyId, pressed, button) {
+            if (!mainVisible) return
+            if (!pressed) return
+
+            if (button == SdlGameController.GC_BUTTON_DPAD_UP) {
+                romSelectedIndex = romSelectedIndex > 1 ? romSelectedIndex - 1 : 0
+            } else if (button == SdlGameController.GC_BUTTON_DPAD_DOWN) {
+                romSelectedIndex = romSelectedIndex < romMaxIndex ? romSelectedIndex + 1 : romSelectedIndex;
+            } else if (button == SdlGameController.GC_BUTTON_A) {
+                if (romSelectedIndex > 0 && romSelectedIndex < romMaxIndex) {
+                    RomManager.run(romSelectedIndex);
+                } else if (romSelectedIndex == romMaxIndex) {
+                    layerStack.push(settingsLayer)
                 }
             }
         }
@@ -71,7 +59,11 @@ Application {
         firstPage: firstPageComponent
         // main is the first layer (layer 0).
         // other layer may disable the controller
-        onLayersChanged: mainVisible = (layers.length == 0) ? true : false
+        onLayersChanged: {
+            mainVisible = layers.length == 0
+            if (!mainVisible) return
+            SdlGameController.activateMappings()
+        }
     }
 
     Component {
