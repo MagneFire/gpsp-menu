@@ -38,20 +38,6 @@ void Settings::setRom(QString path) {
     saveSettings();
 }
 
-void Settings::setActiveGameController(int joyId) {
-    settings->setValue("JOYSTICK_ACTIVE", joyId);
-    qDebug() << settings->value("JOYSTICK_ACTIVE").toString();
-    saveSettings();
-}
-void Settings::setGameControllerMapping(int joyId, QString mapping) {
-    settings->setValue("JOYSTICK_MAP" + QString::number(joyId), mapping);
-    qDebug() << settings->value("JOYSTICK_MAP" + QString::number(joyId)).toString();
-    saveSettings();
-}
-QString Settings::getKeyMapping(int joyId) {
-    return settings->value("JOYSTICK_MAP" + QString::number(joyId)).toString();
-}
-
 QString Settings::getMappingsPath() const {
     return settings->value("MAPPINGS_PATH").toString();
 }

@@ -12,10 +12,6 @@ public:
     QString getRomPath() const;
     void setRom(QString path);
 
-    void setActiveGameController(int joyId);
-    void setGameControllerMapping(int joyId, QString mapping);
-    QString getKeyMapping(int joyId);
-
     QString getMappingsPath() const;
     void setMappingsPath(QString path);
     void loadMappings();

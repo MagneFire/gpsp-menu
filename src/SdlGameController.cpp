@@ -293,7 +293,6 @@ int SdlGameController::getActiveJoyId() {
 void SdlGameController::setActiveJoyId(int id) {
   if (activeJoyId == id) return;
   activeJoyId = id;
-  settings->setActiveGameController(activeJoyId);
   emit activeJoyIdChanged();
 }
 void SdlGameController::writeMapping() {
