@@ -16,7 +16,7 @@ add_library(gpsp-menu ${SRC} ${HEADERS} resources.qrc)
 set_target_properties(gpsp-menu PROPERTIES PREFIX "" SUFFIX "")
 
 target_link_libraries(gpsp-menu PUBLIC
-	AsteroidApp
+	Asteroid::AsteroidApp
 	PkgConfig::SDL2)
 
 install(TARGETS gpsp-menu
